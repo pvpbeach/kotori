@@ -1,0 +1,12 @@
+{
+  "id": "kotori",
+  "name": "kotori",
+  "version": "1.8.8",
+  "description": "Advanced kotori kotori kotori (sadly not a femboy plugin)",
+  "authors": [
+    "NV6",
+    "OhEmilyy"
+  ],
+  "website": "hanime.tv",
+  "main": "com.pvpbeach.kotori.KotoriVelocityPlugin"
+}

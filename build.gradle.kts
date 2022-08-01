@@ -2,6 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.6.21"
+    id("com.github.johnrengelman.shadow") version "4.0.4"
 }
 
 group = "com.pvpbeach.kotori"
@@ -17,8 +18,10 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test"))
-    compileOnly("com.velocitypowered:velocity-api:1.0.0-SNAPSHOT")
-    annotationProcessor("com.velocitypowered:velocity-api:1.0.0-SNAPSHOT")
+    compileOnly("com.velocitypowered:velocity-api:1.1.0-SNAPSHOT")
+    annotationProcessor("com.velocitypowered:velocity-api:1.1.0-SNAPSHOT")
+
+    implementation("net.kyori:adventure-api:4.11.0")
 
     implementation("com.github.Revxrsal.Lamp:common:3.0.71")
     implementation("com.github.Revxrsal.Lamp:velocity:3.0.71")
@@ -31,4 +34,10 @@ tasks.test {
 
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
+}
+
+tasks {
+    build {
+        dependsOn(shadowJar)
+    }
 }

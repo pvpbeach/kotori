@@ -9,15 +9,25 @@ import java.nio.file.Path
 import java.util.UUID
 
 annotation class Store
+annotation class Named(val value: String)
+
+data class KotoriVelocityDataStructure(
+    @Named(":whitelistedIps")
+    val whitelistedIps: MutableList<String>,
+
+    @Named(":whitelistedIds")
+    val whitelistedIds: MutableList<UUID>
+)
+
 object KotoriVelocityData
 {
     @Store
-    val whitelistedIps = mutableListOf<String>()
+    var whitelistedIps = mutableListOf<String>()
 
     @Store
-    val whitelistedIds = mutableListOf<UUID>()
+    var whitelistedIds = mutableListOf<UUID>()
 
-    val gson = GsonBuilder()
+    private val gson = GsonBuilder()
         .setPrettyPrinting()
         .setLongSerializationPolicy(LongSerializationPolicy.STRING)
         .create()
@@ -36,17 +46,31 @@ object KotoriVelocityData
         val file = getFile(plugin.dataDirectory)
         val reader = FileReader(file)
 
-        val data = gson.fromJson(reader, KotoriVelocityData::class.java)
+        val data = gson.fromJson(reader, KotoriVelocityDataStructure::class.java)
         val clazz = data::class.java
 
         for (field in clazz.declaredFields)
         {
-            if (!field.isAnnotationPresent(Store::class.java))
+            val name = if (field.isAnnotationPresent(Named::class.java))
             {
-                continue
-            }
+                field.getAnnotation(Named::class.java).value
+            } else
+            {
+                field.name
+            }.replace(":", "")
 
-            field[this] = field[data]
+            val unaryField =
+                KotoriVelocityData::class
+                    .java
+                    .getDeclaredField(name) ?: continue
+
+            field.isAccessible = true
+            unaryField.isAccessible = true
+
+            val value = field[data] ?: continue
+
+            unaryField[this] =
+                value
         }
     }
 

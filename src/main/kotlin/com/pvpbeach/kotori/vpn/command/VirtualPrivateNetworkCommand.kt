@@ -9,14 +9,17 @@ import revxrsal.commands.command.CommandActor
 import revxrsal.commands.exception.CommandErrorException
 import revxrsal.commands.help.CommandHelp
 import revxrsal.commands.velocity.VelocityCommandActor
+import revxrsal.commands.velocity.annotation.CommandPermission
 import java.util.*
 
 @Command("vpn")
+@CommandPermission("kotori.command.vpn")
 object VirtualPrivateNetworkCommand
 {
     val IP_REGEX = "'\\b((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\\.|\$)){4}\\b'".toRegex()
     val UUID_REGEX = "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}".toRegex()
 
+    @Default
     @Subcommand("help")
     fun vpn(sender: CommandActor, helpEntries: CommandHelp<String>, @Default("1") page: Int)
     {

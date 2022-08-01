@@ -6,7 +6,6 @@ import com.velocitypowered.api.event.ResultedEvent
 import com.velocitypowered.api.event.Subscribe
 import com.velocitypowered.api.event.connection.LoginEvent
 import net.kyori.text.TextComponent
-import net.kyori.text.format.TextColor
 
 object ConnectionListener
 {
@@ -16,7 +15,7 @@ object ConnectionListener
         val connection = event
             .player
             .remoteAddress
-            .hostName
+            .hostString
 
         if (KotoriVelocityData.whitelistedIps.contains(connection)
             || KotoriVelocityData
@@ -36,9 +35,10 @@ object ConnectionListener
 
         if (detected)
         {
-            event.result = ResultedEvent.ComponentResult.denied(
-                TextComponent.of("No proxies or VPNs are permitted on the server!", TextColor.RED)
-            )
+            println("detected lol uwu")
+//            event.result = ResultedEvent.ComponentResult.denied(
+//                TextComponent.of("No proxies or VPNs are permitted on the server!")
+//            )
         }
     }
 }
