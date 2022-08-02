@@ -5,7 +5,7 @@ import com.pvpbeach.kotori.KotoriVelocityPlugin
 import com.velocitypowered.api.event.ResultedEvent
 import com.velocitypowered.api.event.Subscribe
 import com.velocitypowered.api.event.connection.LoginEvent
-import net.kyori.text.TextComponent
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 
 object ConnectionListener
 {
@@ -35,10 +35,15 @@ object ConnectionListener
 
         if (detected)
         {
-            println("detected lol uwu")
-//            event.result = ResultedEvent.ComponentResult.denied(
-//                TextComponent.of("No proxies or VPNs are permitted on the server!")
-//            )
+            event.result = ResultedEvent.ComponentResult.denied(
+                LegacyComponentSerializer
+                    .legacy('&')
+                    .deserialize(
+                        KotoriVelocityData
+                            .vpnKickMessage
+                            .joinToString("\n") { it }
+                    )
+            )
         }
     }
 }

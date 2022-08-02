@@ -1,7 +1,6 @@
 package com.pvpbeach.kotori.vpn.type
 
 import com.pvpbeach.kotori.vpn.VirtualPrivateNetworkDetection
-import com.pvpbeach.kotori.vpn.type.IpIntelVirtualPrivateNetworkDetection.read
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.net.HttpURLConnection

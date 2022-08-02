@@ -13,10 +13,23 @@ annotation class Named(val value: String)
 
 data class KotoriVelocityDataStructure(
     @Named(":whitelistedIps")
-    val whitelistedIps: MutableList<String>,
+    val whitelistedIps: MutableList<String> = mutableListOf(),
 
     @Named(":whitelistedIds")
-    val whitelistedIds: MutableList<UUID>
+    val whitelistedIds: MutableList<UUID> = mutableListOf(),
+
+    @Named(":maintenanceKickMessage")
+    val maintenanceKickMessage: MutableList<String> = mutableListOf(
+        "&cThe server is currently in maintenance mode."
+    ),
+
+    @Named(":maintenanceEnabled")
+    val maintenanceEnabled: Boolean = false,
+
+    @Named(":vpnKickMessage")
+    val vpnKickMessage: MutableList<String> = mutableListOf(
+        "&cYou're not allowed to join the network with a VPN or a Proxy."
+    )
 )
 
 object KotoriVelocityData
@@ -26,6 +39,15 @@ object KotoriVelocityData
 
     @Store
     var whitelistedIds = mutableListOf<UUID>()
+
+    @Store
+    var maintenanceKickMessage = mutableListOf<String>()
+
+    @Store
+    var vpnKickMessage = mutableListOf<String>()
+
+    @Store
+    var maintenanceEnabled = false
 
     private val gson = GsonBuilder()
         .setPrettyPrinting()
